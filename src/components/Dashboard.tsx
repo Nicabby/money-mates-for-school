@@ -1,13 +1,15 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useExpenses } from '@/components/ExpenseProvider';
 import { storageService } from '@/lib/storage';
 import { formatCurrency, formatDate, getCategoryColor, getCategoryIcon } from '@/lib/utils';
+import CloudExportHub from '@/components/CloudExportHub';
 
 const Dashboard: React.FC = () => {
   const { expenses } = useExpenses();
+  const [isCloudExportOpen, setIsCloudExportOpen] = useState(false);
 
   const summary = useMemo(() => {
     return storageService.generateExpenseSummary(expenses);
@@ -30,9 +32,18 @@ const Dashboard: React.FC = () => {
           <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
           <p className="text-gray-600">Your business expense tracking overview</p>
         </div>
-        <Link href="/add" className="btn btn-primary">
-          ➕ Add Expense
-        </Link>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <button
+            onClick={() => setIsCloudExportOpen(true)}
+            className="btn btn-secondary"
+            disabled={expenses.length === 0}
+          >
+            ☁️ Cloud Export
+          </button>
+          <Link href="/add" className="btn btn-primary">
+            ➕ Add Expense
+          </Link>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -177,6 +188,13 @@ const Dashboard: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Cloud Export Hub */}
+      <CloudExportHub
+        isOpen={isCloudExportOpen}
+        onClose={() => setIsCloudExportOpen(false)}
+        expenses={expenses}
+      />
     </div>
   );
 };
