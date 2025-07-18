@@ -1,11 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --font-inter: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-aptos: 'Aptos', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --color-text: #0D1F2D;
+  --color-button: #546A7B;
+  --color-accent: #9EA3B0;
+  --color-background: #FAE1DF;
+  --color-button-alt: #E4C3AD;
+  --color-white: #FFFFFF;
+  --color-success: #10B981;
+  --color-error: #EF4444;
 }
 
 @theme inline {
-  --font-sans: var(--font-inter);
+  --font-sans: var(--font-aptos);
 }
 
 * {
@@ -14,10 +22,11 @@
 
 body {
   margin: 0;
-  font-family: var(--font-inter);
+  font-family: var(--font-aptos);
   line-height: 1.6;
-  color: #374151;
-  background-color: #f9fafb;
+  color: var(--color-text);
+  background-color: var(--color-background);
+  font-weight: 400;
 }
 
 .container {
@@ -27,91 +36,186 @@ body {
 }
 
 .card {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  padding: 1.5rem;
+  background: var(--color-white);
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(13, 31, 45, 0.1), 0 2px 4px -1px rgba(13, 31, 45, 0.06);
+  padding: 2rem;
+  border: 1px solid rgba(84, 106, 123, 0.1);
 }
 
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
-  font-weight: 500;
+  border-radius: 12px;
+  font-weight: 600;
   font-size: 0.875rem;
   line-height: 1.25rem;
-  padding: 0.5rem 1rem;
-  transition: all 0.2s;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.2s ease-in-out;
   cursor: pointer;
   text-decoration: none;
   border: none;
+  font-family: var(--font-aptos);
 }
 
 .btn-primary {
-  background-color: #3b82f6;
-  color: white;
+  background-color: var(--color-button);
+  color: var(--color-white);
+  border: 1px solid var(--color-button);
 }
 
 .btn-primary:hover {
-  background-color: #2563eb;
+  background-color: var(--color-text);
+  border-color: var(--color-text);
+  transform: translateY(-1px);
 }
 
 .btn-secondary {
-  background-color: #e5e7eb;
-  color: #374151;
+  background-color: var(--color-button-alt);
+  color: var(--color-text);
+  border: 1px solid var(--color-button-alt);
 }
 
 .btn-secondary:hover {
-  background-color: #d1d5db;
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  transform: translateY(-1px);
 }
 
 .btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  transform: none;
 }
 
 .btn:disabled:hover {
   background-color: inherit;
+  transform: none;
 }
 
 .btn-danger {
-  background-color: #ef4444;
-  color: white;
+  background-color: var(--color-error);
+  color: var(--color-white);
+  border: 1px solid var(--color-error);
 }
 
 .btn-danger:hover {
-  background-color: #dc2626;
+  background-color: #DC2626;
+  border-color: #DC2626;
+  transform: translateY(-1px);
+}
+
+.btn-success {
+  background-color: var(--color-success);
+  color: var(--color-white);
+  border: 1px solid var(--color-success);
+}
+
+.btn-success:hover {
+  background-color: #059669;
+  border-color: #059669;
+  transform: translateY(-1px);
 }
 
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .form-label {
   display: block;
-  font-weight: 500;
-  margin-bottom: 0.25rem;
-  color: #374151;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--color-text);
+  font-size: 0.875rem;
 }
 
 .form-input {
   width: 100%;
-  padding: 0.5rem 0.75rem;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--color-accent);
+  border-radius: 8px;
   font-size: 0.875rem;
-  transition: border-color 0.2s;
+  transition: all 0.2s ease-in-out;
+  background-color: var(--color-white);
+  color: var(--color-text);
+  font-family: var(--font-aptos);
 }
 
 .form-input:focus {
   outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  border-color: var(--color-button);
+  box-shadow: 0 0 0 3px rgba(84, 106, 123, 0.1);
 }
 
 .form-error {
-  color: #ef4444;
+  color: var(--color-error);
   font-size: 0.75rem;
-  margin-top: 0.25rem;
+  margin-top: 0.5rem;
+  font-weight: 500;
+}
+
+.nav-link {
+  color: var(--color-text);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+}
+
+.nav-link:hover {
+  background-color: var(--color-button-alt);
+  color: var(--color-text);
+}
+
+.nav-link.active {
+  background-color: var(--color-button);
+  color: var(--color-white);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-text), var(--color-button));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.income-card {
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  color: var(--color-white);
+}
+
+.expense-card {
+  background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+  color: var(--color-white);
+}
+
+.form-container {
+  background: var(--color-white);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 10px 25px -5px rgba(13, 31, 45, 0.1), 0 10px 10px -5px rgba(13, 31, 45, 0.04);
+  border: 1px solid rgba(84, 106, 123, 0.1);
+}
+
+.main-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .main-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 1rem;
+  text-align: center;
 }

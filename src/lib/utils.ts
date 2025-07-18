@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { Expense } from '@/types/expense';
+import { Income } from '@/types/income';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -100,6 +101,81 @@ export function getCategoryIcon(category: string): string {
     Bills: '💳',
     Tech: '💻',
     Other: '📝',
+  };
+  return icons[category as keyof typeof icons] || icons.Other;
+}
+
+export function validateIncomeForm(data: {
+  date: string;
+  amount: string;
+  category: string;
+  source: string;
+}): { isValid: boolean; errors: Record<string, string> } {
+  const errors: Record<string, string> = {};
+
+  if (!data.date) {
+    errors.date = 'Date is required';
+  } else if (new Date(data.date) > new Date()) {
+    errors.date = 'Date cannot be in the future';
+  }
+
+  if (!data.amount) {
+    errors.amount = 'Amount is required';
+  } else if (isNaN(parseFloat(data.amount)) || parseFloat(data.amount) <= 0) {
+    errors.amount = 'Amount must be a positive number';
+  }
+
+  if (!data.category) {
+    errors.category = 'Category is required';
+  }
+
+  if (!data.source.trim()) {
+    errors.source = 'Source is required';
+  } else if (data.source.trim().length < 2) {
+    errors.source = 'Source must be at least 2 characters';
+  }
+
+  return {
+    isValid: Object.keys(errors).length === 0,
+    errors,
+  };
+}
+
+export function filterIncomes(incomes: Income[], filters: {
+  category: string;
+  dateFrom: string;
+  dateTo: string;
+  searchTerm: string;
+}) {
+  return incomes.filter(income => {
+    const matchesCategory = filters.category === 'All' || income.category === filters.category;
+    const matchesDateRange = (!filters.dateFrom || income.date >= filters.dateFrom) &&
+                           (!filters.dateTo || income.date <= filters.dateTo);
+    const matchesSearch = !filters.searchTerm || 
+                         income.source.toLowerCase().includes(filters.searchTerm.toLowerCase());
+    
+    return matchesCategory && matchesDateRange && matchesSearch;
+  });
+}
+
+export function getIncomeCategoryColor(category: string): string {
+  const colors = {
+    Salary: 'bg-green-100 text-green-800',
+    Freelance: 'bg-blue-100 text-blue-800',
+    Investment: 'bg-purple-100 text-purple-800',
+    Gift: 'bg-pink-100 text-pink-800',
+    Other: 'bg-gray-100 text-gray-800',
+  };
+  return colors[category as keyof typeof colors] || colors.Other;
+}
+
+export function getIncomeCategoryIcon(category: string): string {
+  const icons = {
+    Salary: '💼',
+    Freelance: '🖥️',
+    Investment: '📈',
+    Gift: '🎁',
+    Other: '💰',
   };
   return icons[category as keyof typeof icons] || icons.Other;
 }

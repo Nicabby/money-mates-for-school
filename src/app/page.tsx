@@ -1,5 +1,315 @@
-import Dashboard from '@/components/Dashboard';
+'use client';
+
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useExpenses } from '@/components/ExpenseProvider';
+import { useIncomes } from '@/components/IncomeProvider';
+import { validateExpenseForm, validateIncomeForm, generateId } from '@/lib/utils';
+import { Expense, ExpenseFormData, Category } from '@/types/expense';
+import { Income, IncomeFormData, IncomeCategory } from '@/types/income';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 export default function Home() {
-  return <Dashboard />;
+  const { addExpense } = useExpenses();
+  const { addIncome } = useIncomes();
+  const router = useRouter();
+
+  const [expenseFormData, setExpenseFormData] = useState<ExpenseFormData>({
+    date: new Date().toISOString().split('T')[0],
+    amount: '',
+    category: 'Food',
+    description: '',
+  });
+
+  const [incomeFormData, setIncomeFormData] = useState<IncomeFormData>({
+    date: new Date().toISOString().split('T')[0],
+    amount: '',
+    category: 'Salary',
+    source: '',
+  });
+
+  const [expenseErrors, setExpenseErrors] = useState<Record<string, string>>({});
+  const [incomeErrors, setIncomeErrors] = useState<Record<string, string>>({});
+  const [isExpenseSubmitting, setIsExpenseSubmitting] = useState(false);
+  const [isIncomeSubmitting, setIsIncomeSubmitting] = useState(false);
+
+  const expenseCategories: Category[] = ['Food', 'Transportation', 'Entertainment', 'Shopping', 'Bills', 'Tech', 'Other'];
+  const incomeCategories: IncomeCategory[] = ['Salary', 'Freelance', 'Investment', 'Gift', 'Other'];
+
+  const handleExpenseChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setExpenseFormData(prev => ({ ...prev, [name]: value }));
+    if (expenseErrors[name]) {
+      setExpenseErrors(prev => ({ ...prev, [name]: '' }));
+    }
+  };
+
+  const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setIncomeFormData(prev => ({ ...prev, [name]: value }));
+    if (incomeErrors[name]) {
+      setIncomeErrors(prev => ({ ...prev, [name]: '' }));
+    }
+  };
+
+  const handleExpenseSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsExpenseSubmitting(true);
+
+    const validation = validateExpenseForm(expenseFormData);
+    if (!validation.isValid) {
+      setExpenseErrors(validation.errors);
+      setIsExpenseSubmitting(false);
+      return;
+    }
+
+    try {
+      const expense: Expense = {
+        id: generateId(),
+        date: expenseFormData.date,
+        amount: parseFloat(expenseFormData.amount),
+        category: expenseFormData.category,
+        description: expenseFormData.description.trim(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+
+      addExpense(expense);
+      setExpenseFormData({
+        date: new Date().toISOString().split('T')[0],
+        amount: '',
+        category: 'Food',
+        description: '',
+      });
+      
+      // Show success message or redirect
+      router.push('/dashboard');
+    } catch (error) {
+      console.error('Error saving expense:', error);
+      setExpenseErrors({ submit: 'Failed to save expense. Please try again.' });
+    } finally {
+      setIsExpenseSubmitting(false);
+    }
+  };
+
+  const handleIncomeSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsIncomeSubmitting(true);
+
+    const validation = validateIncomeForm(incomeFormData);
+    if (!validation.isValid) {
+      setIncomeErrors(validation.errors);
+      setIsIncomeSubmitting(false);
+      return;
+    }
+
+    try {
+      const income: Income = {
+        id: generateId(),
+        date: incomeFormData.date,
+        amount: parseFloat(incomeFormData.amount),
+        category: incomeFormData.category,
+        source: incomeFormData.source.trim(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+
+      addIncome(income);
+      setIncomeFormData({
+        date: new Date().toISOString().split('T')[0],
+        amount: '',
+        category: 'Salary',
+        source: '',
+      });
+      
+      // Show success message or redirect
+      router.push('/dashboard');
+    } catch (error) {
+      console.error('Error saving income:', error);
+      setIncomeErrors({ submit: 'Failed to save income. Please try again.' });
+    } finally {
+      setIsIncomeSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="space-y-8">
+      <div className="text-center" style={{ paddingTop: '12pt' }}>
+        <h1 className="text-4xl font-bold gradient-text mb-2">Financial Tracker</h1>
+        <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+          Track your financial journey with our sleek and intuitive platform.
+        </p>
+        <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+          Add income and expenses effortlessly.
+        </p>
+      </div>
+
+      <div className="main-form-grid">
+        {/* Income Form */}
+        <div className="form-container">
+          <h2 className="section-title">Add Income</h2>
+          
+          <form onSubmit={handleIncomeSubmit} className="space-y-6">
+            {incomeErrors.submit && (
+              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                <p className="text-red-700 text-sm">{incomeErrors.submit}</p>
+              </div>
+            )}
+
+            <div className="form-group">
+              <label htmlFor="income-date" className="form-label">Date</label>
+              <input
+                type="date"
+                id="income-date"
+                name="date"
+                value={incomeFormData.date}
+                onChange={handleIncomeChange}
+                className="form-input"
+                max={new Date().toISOString().split('T')[0]}
+              />
+              {incomeErrors.date && <p className="form-error">{incomeErrors.date}</p>}
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="income-amount" className="form-label">Amount ($)</label>
+              <input
+                type="number"
+                id="income-amount"
+                name="amount"
+                value={incomeFormData.amount}
+                onChange={handleIncomeChange}
+                className="form-input"
+                placeholder="0.00"
+                step="0.01"
+                min="0"
+              />
+              {incomeErrors.amount && <p className="form-error">{incomeErrors.amount}</p>}
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="income-category" className="form-label">Category</label>
+              <select
+                id="income-category"
+                name="category"
+                value={incomeFormData.category}
+                onChange={handleIncomeChange}
+                className="form-input"
+              >
+                {incomeCategories.map(category => (
+                  <option key={category} value={category}>{category}</option>
+                ))}
+              </select>
+              {incomeErrors.category && <p className="form-error">{incomeErrors.category}</p>}
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="income-source" className="form-label">Source</label>
+              <input
+                type="text"
+                id="income-source"
+                name="source"
+                value={incomeFormData.source}
+                onChange={handleIncomeChange}
+                className="form-input"
+                placeholder="Enter income source"
+              />
+              {incomeErrors.source && <p className="form-error">{incomeErrors.source}</p>}
+            </div>
+
+            <button
+              type="submit"
+              disabled={isIncomeSubmitting}
+              className="btn btn-secondary w-full flex items-center justify-center space-x-2"
+            >
+              {isIncomeSubmitting && <LoadingSpinner size="sm" />}
+              <span>{isIncomeSubmitting ? 'Adding Income...' : 'Add Income'}</span>
+            </button>
+          </form>
+        </div>
+
+        {/* Expense Form */}
+        <div className="form-container">
+          <h2 className="section-title">Add Expense</h2>
+          
+          <form onSubmit={handleExpenseSubmit} className="space-y-6">
+            {expenseErrors.submit && (
+              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                <p className="text-red-700 text-sm">{expenseErrors.submit}</p>
+              </div>
+            )}
+
+            <div className="form-group">
+              <label htmlFor="expense-date" className="form-label">Date</label>
+              <input
+                type="date"
+                id="expense-date"
+                name="date"
+                value={expenseFormData.date}
+                onChange={handleExpenseChange}
+                className="form-input"
+                max={new Date().toISOString().split('T')[0]}
+              />
+              {expenseErrors.date && <p className="form-error">{expenseErrors.date}</p>}
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="expense-amount" className="form-label">Amount ($)</label>
+              <input
+                type="number"
+                id="expense-amount"
+                name="amount"
+                value={expenseFormData.amount}
+                onChange={handleExpenseChange}
+                className="form-input"
+                placeholder="0.00"
+                step="0.01"
+                min="0"
+              />
+              {expenseErrors.amount && <p className="form-error">{expenseErrors.amount}</p>}
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="expense-category" className="form-label">Category</label>
+              <select
+                id="expense-category"
+                name="category"
+                value={expenseFormData.category}
+                onChange={handleExpenseChange}
+                className="form-input"
+              >
+                {expenseCategories.map(category => (
+                  <option key={category} value={category}>{category}</option>
+                ))}
+              </select>
+              {expenseErrors.category && <p className="form-error">{expenseErrors.category}</p>}
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="expense-description" className="form-label">Description</label>
+              <textarea
+                id="expense-description"
+                name="description"
+                value={expenseFormData.description}
+                onChange={handleExpenseChange}
+                className="form-input"
+                rows={1}
+                placeholder="Enter expense description"
+                style={{ minHeight: '2.5rem', resize: 'vertical' }}
+              />
+              {expenseErrors.description && <p className="form-error">{expenseErrors.description}</p>}
+            </div>
+
+            <button
+              type="submit"
+              disabled={isExpenseSubmitting}
+              className="btn btn-secondary w-full flex items-center justify-center space-x-2"
+            >
+              {isExpenseSubmitting && <LoadingSpinner size="sm" />}
+              <span>{isExpenseSubmitting ? 'Adding Expense...' : 'Add Expense'}</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
 }

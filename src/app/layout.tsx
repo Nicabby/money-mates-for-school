@@ -1,18 +1,13 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import { ExpenseProvider } from "@/components/ExpenseProvider";
+import { IncomeProvider } from "@/components/IncomeProvider";
 import ErrorBoundary from "@/components/ErrorBoundary";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-});
-
 export const metadata: Metadata = {
-  title: "Business Expenses",
-  description: "Track your business expenses with ease",
+  title: "Financial Tracker",
+  description: "Track your income and expenses with ease",
 };
 
 export default function RootLayout({
@@ -22,13 +17,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} font-sans antialiased bg-gray-50`}>
+      <body className="font-sans antialiased">
         <ErrorBoundary>
           <ExpenseProvider>
-            <Navigation />
-            <main className="container py-8">
-              {children}
-            </main>
+            <IncomeProvider>
+              <Navigation />
+              <main className="container py-8">
+                {children}
+              </main>
+            </IncomeProvider>
           </ExpenseProvider>
         </ErrorBoundary>
       </body>
