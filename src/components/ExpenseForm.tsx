@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Category, Expense, ExpenseFormData } from '@/types/expense';
 import { useExpenses } from '@/components/ExpenseProvider';
@@ -16,11 +16,19 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ initialData, onSubmit }) => {
   const { addExpense, updateExpense } = useExpenses();
   const router = useRouter();
   const [formData, setFormData] = useState<ExpenseFormData>({
-    date: initialData?.date || new Date().toISOString().split('T')[0],
+    date: initialData?.date || '',
     amount: initialData?.amount.toString() || '',
     category: initialData?.category || 'Food',
     description: initialData?.description || '',
   });
+
+  // Set current date after hydration to avoid SSR mismatch
+  useEffect(() => {
+    if (!initialData && !formData.date) {
+      const today = new Date().toISOString().split('T')[0];
+      setFormData(prev => ({ ...prev, date: today }));
+    }
+  }, [initialData, formData.date]);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 

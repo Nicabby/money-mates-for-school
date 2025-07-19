@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useExpenses } from '@/components/ExpenseProvider';
 import { useIncomes } from '@/components/IncomeProvider';
@@ -15,18 +15,25 @@ export default function Home() {
   const router = useRouter();
 
   const [expenseFormData, setExpenseFormData] = useState<ExpenseFormData>({
-    date: new Date().toISOString().split('T')[0],
+    date: '',
     amount: '',
     category: 'Food',
     description: '',
   });
 
   const [incomeFormData, setIncomeFormData] = useState<IncomeFormData>({
-    date: new Date().toISOString().split('T')[0],
+    date: '',
     amount: '',
     category: 'Salary',
     source: '',
   });
+
+  // Set current date after hydration to avoid SSR mismatch
+  useEffect(() => {
+    const today = new Date().toISOString().split('T')[0];
+    setExpenseFormData(prev => ({ ...prev, date: today }));
+    setIncomeFormData(prev => ({ ...prev, date: today }));
+  }, []);
 
   const [expenseErrors, setExpenseErrors] = useState<Record<string, string>>({});
   const [incomeErrors, setIncomeErrors] = useState<Record<string, string>>({});

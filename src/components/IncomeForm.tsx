@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { IncomeCategory, Income, IncomeFormData } from '@/types/income';
 import { useIncomes } from '@/components/IncomeProvider';
@@ -16,11 +16,19 @@ const IncomeForm: React.FC<IncomeFormProps> = ({ initialData, onSubmit }) => {
   const { addIncome, updateIncome } = useIncomes();
   const router = useRouter();
   const [formData, setFormData] = useState<IncomeFormData>({
-    date: initialData?.date || new Date().toISOString().split('T')[0],
+    date: initialData?.date || '',
     amount: initialData?.amount.toString() || '',
     category: initialData?.category || 'Salary',
     source: initialData?.source || '',
   });
+
+  // Set current date after hydration to avoid SSR mismatch
+  useEffect(() => {
+    if (!initialData && !formData.date) {
+      const today = new Date().toISOString().split('T')[0];
+      setFormData(prev => ({ ...prev, date: today }));
+    }
+  }, [initialData, formData.date]);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
