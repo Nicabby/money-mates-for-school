@@ -39,11 +39,11 @@ const Dashboard: React.FC = () => {
   }, [incomes]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" style={{ paddingTop: '12pt' }}>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold gradient-text">Financial Dashboard</h1>
-          <p className="text-gray-600 text-lg">Your complete financial overview</p>
+          <p className="text-gray-600 text-lg">Your complete financial overview.</p>
         </div>
         <div className="flex flex-col sm:flex-row gap-3">
           <button

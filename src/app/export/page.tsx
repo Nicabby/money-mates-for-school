@@ -132,7 +132,10 @@ Report generated on: ${new Date().toLocaleString()}
       <div className="text-center">
         <h1 className="text-3xl font-bold gradient-text mb-2">Export Center</h1>
         <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-          Export your financial data and generate monthly reports with advanced filtering options.
+          Export your financial data and generate monthly reports
+        </p>
+        <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+          with advanced filtering options.
         </p>
       </div>
 

@@ -182,12 +182,12 @@ body {
 }
 
 .income-card {
-  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
-  color: var(--color-white);
+  background: linear-gradient(135deg, #9AE19D 0%, #7BC97C 100%);
+  color: var(--color-text);
 }
 
 .expense-card {
-  background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+  background: linear-gradient(135deg, #DE3C4B 0%, #B52D3A 100%);
   color: var(--color-white);
 }
 
