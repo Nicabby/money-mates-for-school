@@ -40,23 +40,23 @@ const ExpenseList: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8" style={{ paddingTop: '12pt' }}>
+      <div className="text-center">
+        <h1 className="text-3xl font-bold gradient-text mb-2">Expenses</h1>
+        <p className="text-gray-600 text-lg">
+          {filteredExpenses.length} of {expenses.length} expenses
+        </p>
+      </div>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Expenses</h1>
-          <p className="text-gray-600">
-            {filteredExpenses.length} of {expenses.length} expenses
-          </p>
-        </div>
         <div className="flex space-x-2">
           <button
             onClick={handleExport}
             className="btn btn-secondary"
           >
-            📥 Export CSV
+            Export CSV
           </button>
-          <Link href="/add" className="btn btn-primary">
-            ➕ Add Expense
+          <Link href="/" className="btn btn-primary">
+            Add Expense
           </Link>
         </div>
       </div>
@@ -142,7 +142,6 @@ const ExpenseList: React.FC = () => {
 
       {filteredExpenses.length === 0 ? (
         <div className="card text-center py-12">
-          <div className="text-6xl mb-4">💸</div>
           <h3 className="text-lg font-semibold text-gray-900 mb-2">No expenses found</h3>
           <p className="text-gray-600 mb-4">
             {expenses.length === 0 
@@ -150,7 +149,7 @@ const ExpenseList: React.FC = () => {
               : "Try adjusting your filters to see more expenses."
             }
           </p>
-          <Link href="/add" className="btn btn-primary">
+          <Link href="/" className="btn btn-primary">
             Add Your First Expense
           </Link>
         </div>

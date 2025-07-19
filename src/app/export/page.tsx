@@ -128,10 +128,10 @@ Report generated on: ${new Date().toLocaleString()}
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8" style={{ paddingTop: '12pt' }}>
       <div className="text-center">
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">Export Center</h1>
-        <p className="text-gray-600 max-w-2xl mx-auto">
+        <h1 className="text-3xl font-bold gradient-text mb-2">Export Center</h1>
+        <p className="text-gray-600 text-lg max-w-2xl mx-auto">
           Export your financial data and generate monthly reports with advanced filtering options.
         </p>
       </div>

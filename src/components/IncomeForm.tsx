@@ -77,10 +77,13 @@ const IncomeForm: React.FC<IncomeFormProps> = ({ initialData, onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="card max-w-md mx-auto">
-      <h2 className="text-xl font-bold mb-6 text-gray-900">
-        {initialData ? 'Edit Income' : 'Add New Income'}
-      </h2>
+    <div className="space-y-8" style={{ paddingTop: '12pt' }}>
+      <div className="text-center">
+        <h1 className="text-3xl font-bold gradient-text mb-2">
+          {initialData ? 'Edit Income' : 'Add New Income'}
+        </h1>
+      </div>
+      <form onSubmit={handleSubmit} className="form-container max-w-md mx-auto">
 
       {errors.submit && (
         <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
@@ -162,7 +165,7 @@ const IncomeForm: React.FC<IncomeFormProps> = ({ initialData, onSubmit }) => {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="btn btn-primary flex-1 flex items-center justify-center space-x-2"
+          className="btn btn-secondary flex-1 flex items-center justify-center space-x-2"
         >
           {isSubmitting && <LoadingSpinner size="sm" />}
           <span>{isSubmitting ? 'Saving...' : initialData ? 'Update Income' : 'Add Income'}</span>
@@ -176,6 +179,7 @@ const IncomeForm: React.FC<IncomeFormProps> = ({ initialData, onSubmit }) => {
         </button>
       </div>
     </form>
+    </div>
   );
 };
 

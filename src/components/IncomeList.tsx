@@ -40,23 +40,23 @@ const IncomeList: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8" style={{ paddingTop: '12pt' }}>
+      <div className="text-center">
+        <h1 className="text-3xl font-bold gradient-text mb-2">Income</h1>
+        <p className="text-gray-600 text-lg">
+          {filteredIncomes.length} of {incomes.length} income entries
+        </p>
+      </div>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Income</h1>
-          <p className="text-gray-600">
-            {filteredIncomes.length} of {incomes.length} income entries
-          </p>
-        </div>
         <div className="flex space-x-2">
           <button
             onClick={handleExport}
             className="btn btn-secondary"
           >
-            📥 Export CSV
+            Export CSV
           </button>
-          <Link href="/income/add" className="btn btn-primary">
-            ➕ Add Income
+          <Link href="/" className="btn btn-primary">
+            Add Income
           </Link>
         </div>
       </div>
@@ -142,7 +142,6 @@ const IncomeList: React.FC = () => {
 
       {filteredIncomes.length === 0 ? (
         <div className="card text-center py-12">
-          <div className="text-6xl mb-4">💰</div>
           <h3 className="text-lg font-semibold text-gray-900 mb-2">No income found</h3>
           <p className="text-gray-600 mb-4">
             {incomes.length === 0 
@@ -150,7 +149,7 @@ const IncomeList: React.FC = () => {
               : "Try adjusting your filters to see more income entries."
             }
           </p>
-          <Link href="/income/add" className="btn btn-primary">
+          <Link href="/" className="btn btn-primary">
             Add Your First Income
           </Link>
         </div>
