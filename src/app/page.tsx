@@ -8,11 +8,15 @@ import { validateExpenseForm, validateIncomeForm, generateId } from '@/lib/utils
 import { Expense, ExpenseFormData, Category } from '@/types/expense';
 import { Income, IncomeFormData, IncomeCategory } from '@/types/income';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import SampleDataLoader from '@/components/SampleDataLoader';
+import MoneyTermsPreview from '@/components/MoneyTermsPreview';
+import QuickStartGuide from '@/components/QuickStartGuide';
 
 export default function Home() {
   const { addExpense } = useExpenses();
   const { addIncome } = useIncomes();
   const router = useRouter();
+  const [maxDate, setMaxDate] = useState('');
 
   const [expenseFormData, setExpenseFormData] = useState<ExpenseFormData>({
     date: '',
@@ -31,6 +35,7 @@ export default function Home() {
   // Set current date after hydration to avoid SSR mismatch
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
+    setMaxDate(today);
     setExpenseFormData(prev => ({ ...prev, date: today }));
     setIncomeFormData(prev => ({ ...prev, date: today }));
   }, []);
@@ -83,7 +88,7 @@ export default function Home() {
 
       addExpense(expense);
       setExpenseFormData({
-        date: new Date().toISOString().split('T')[0],
+        date: expenseFormData.date || new Date().toISOString().split('T')[0],
         amount: '',
         category: 'Food',
         description: '',
@@ -123,7 +128,7 @@ export default function Home() {
 
       addIncome(income);
       setIncomeFormData({
-        date: new Date().toISOString().split('T')[0],
+        date: incomeFormData.date || new Date().toISOString().split('T')[0],
         amount: '',
         category: 'Salary',
         source: '',
@@ -141,181 +146,67 @@ export default function Home() {
 
   return (
     <div className="space-y-8">
-      <div className="text-center" style={{ paddingTop: '12pt' }}>
-        <h1 className="text-4xl font-bold gradient-text mb-2">Financial Tracker</h1>
-        <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-          Track your financial journey with our sleek and intuitive platform.
-        </p>
-        <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-          Add income and expenses effortlessly.
-        </p>
+      <div className="mx-auto" style={{ maxWidth: 'calc(64rem + 6cm)', paddingTop: '12pt' }}>
+        <div className="text-center grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+          <div className="flex justify-center">
+            <img src="/MoneyMateslogo.png" alt="MoneyMates" style={{ height: '201.6px', width: 'auto' }} />
+          </div>
+          <div className="text-center">
+            <p className="text-gray-600 text-lg mb-2">
+              Learn how to manage your money like a pro! 
+            </p>
+            <p className="text-gray-600 text-lg mb-2">
+              Track what you earn (allowance, chores) and what you spend.
+            </p>
+            <p className="text-gray-600 text-lg mb-4">
+              Build smart money habits that will help you reach your goals!
+            </p>
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-lg mx-auto">
+              <p className="text-blue-800 text-sm">
+                <strong>New to budgeting?</strong> Check out our <a href="/money-terms" className="text-blue-600 underline">Money Terms Guide</a> to learn the basics!
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="main-form-grid">
-        {/* Income Form */}
-        <div className="form-container">
-          <h2 className="section-title">Add Income</h2>
+
+      {/* Four boxes in 2x2 grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mx-auto" style={{ maxWidth: 'calc(64rem + 6cm)' }}>
+        <div className="bg-white border border-gray-200 rounded-lg p-4">
+          <div className="text-center" style={{ marginBottom: '6px' }}>
+            <div className="text-2xl" style={{ margin: '0' }}>🎓</div>
+            <h3 className="font-semibold text-lg" style={{ color: '#5e0b15', margin: '0' }}>Get Started Now</h3>
+          </div>
           
-          <form onSubmit={handleIncomeSubmit} className="space-y-6">
-            {incomeErrors.submit && (
-              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-                <p className="text-red-700 text-sm">{incomeErrors.submit}</p>
-              </div>
-            )}
-
-            <div className="form-group">
-              <label htmlFor="income-date" className="form-label">Date</label>
-              <input
-                type="date"
-                id="income-date"
-                name="date"
-                value={incomeFormData.date}
-                onChange={handleIncomeChange}
-                className="form-input"
-                max={new Date().toISOString().split('T')[0]}
-              />
-              {incomeErrors.date && <p className="form-error">{incomeErrors.date}</p>}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="income-amount" className="form-label">Amount ($)</label>
-              <input
-                type="number"
-                id="income-amount"
-                name="amount"
-                value={incomeFormData.amount}
-                onChange={handleIncomeChange}
-                className="form-input"
-                placeholder="0.00"
-                step="0.01"
-                min="0"
-              />
-              {incomeErrors.amount && <p className="form-error">{incomeErrors.amount}</p>}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="income-category" className="form-label">Category</label>
-              <select
-                id="income-category"
-                name="category"
-                value={incomeFormData.category}
-                onChange={handleIncomeChange}
-                className="form-input"
-              >
-                {incomeCategories.map(category => (
-                  <option key={category} value={category}>{category}</option>
-                ))}
-              </select>
-              {incomeErrors.category && <p className="form-error">{incomeErrors.category}</p>}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="income-source" className="form-label">Source</label>
-              <input
-                type="text"
-                id="income-source"
-                name="source"
-                value={incomeFormData.source}
-                onChange={handleIncomeChange}
-                className="form-input"
-                placeholder="Enter income source"
-              />
-              {incomeErrors.source && <p className="form-error">{incomeErrors.source}</p>}
-            </div>
-
-            <button
-              type="submit"
-              disabled={isIncomeSubmitting}
-              className="btn btn-secondary w-full flex items-center justify-center space-x-2"
-            >
-              {isIncomeSubmitting && <LoadingSpinner size="sm" />}
-              <span>{isIncomeSubmitting ? 'Adding Income...' : 'Add Income'}</span>
-            </button>
-          </form>
-        </div>
-
-        {/* Expense Form */}
-        <div className="form-container">
-          <h2 className="section-title">Add Expense</h2>
+          <p className="text-sm mb-2 text-left box-text-left" style={{ color: '#5e0b15', lineHeight: '1.5' }}>
+            Ready to begin?
+          </p>
+          <p className="text-sm mb-3 text-left box-text-left" style={{ color: '#5e0b15', lineHeight: '1.5' }}>
+            Add your income and expenses to start tracking your money today.
+          </p>
           
-          <form onSubmit={handleExpenseSubmit} className="space-y-6">
-            {expenseErrors.submit && (
-              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-                <p className="text-red-700 text-sm">{expenseErrors.submit}</p>
-              </div>
-            )}
-
-            <div className="form-group">
-              <label htmlFor="expense-date" className="form-label">Date</label>
-              <input
-                type="date"
-                id="expense-date"
-                name="date"
-                value={expenseFormData.date}
-                onChange={handleExpenseChange}
-                className="form-input"
-                max={new Date().toISOString().split('T')[0]}
-              />
-              {expenseErrors.date && <p className="form-error">{expenseErrors.date}</p>}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="expense-amount" className="form-label">Amount ($)</label>
-              <input
-                type="number"
-                id="expense-amount"
-                name="amount"
-                value={expenseFormData.amount}
-                onChange={handleExpenseChange}
-                className="form-input"
-                placeholder="0.00"
-                step="0.01"
-                min="0"
-              />
-              {expenseErrors.amount && <p className="form-error">{expenseErrors.amount}</p>}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="expense-category" className="form-label">Category</label>
-              <select
-                id="expense-category"
-                name="category"
-                value={expenseFormData.category}
-                onChange={handleExpenseChange}
-                className="form-input"
-              >
-                {expenseCategories.map(category => (
-                  <option key={category} value={category}>{category}</option>
-                ))}
-              </select>
-              {expenseErrors.category && <p className="form-error">{expenseErrors.category}</p>}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="expense-description" className="form-label">Description</label>
-              <textarea
-                id="expense-description"
-                name="description"
-                value={expenseFormData.description}
-                onChange={handleExpenseChange}
-                className="form-input"
-                rows={1}
-                placeholder="Enter expense description"
-                style={{ minHeight: '2.5rem', resize: 'vertical' }}
-              />
-              {expenseErrors.description && <p className="form-error">{expenseErrors.description}</p>}
-            </div>
-
+          <p className="text-xs mb-3 text-left box-text-left" style={{ color: '#5e0b15' }}>
+            <strong>Start with:</strong> Adding your first expense, setting up income, creating budgets!
+          </p>
+          
+          <div style={{ width: '100%' }}>
             <button
-              type="submit"
-              disabled={isExpenseSubmitting}
-              className="btn btn-secondary w-full flex items-center justify-center space-x-2"
+              onClick={() => window.location.href = '/add-entry'}
+              className="btn btn-primary btn-full-width text-center text-sm h-12"
+              style={{ 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                boxSizing: 'border-box'
+              }}
             >
-              {isExpenseSubmitting && <LoadingSpinner size="sm" />}
-              <span>{isExpenseSubmitting ? 'Adding Expense...' : 'Add Expense'}</span>
+              🎓 Get Started Now
             </button>
-          </form>
+          </div>
         </div>
+        <QuickStartGuide />
+        <SampleDataLoader />
+        <MoneyTermsPreview />
       </div>
     </div>
   );

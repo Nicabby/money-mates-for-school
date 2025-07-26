@@ -130,17 +130,14 @@ Report generated on: ${new Date().toLocaleString()}
   return (
     <div className="space-y-8" style={{ paddingTop: '12pt' }}>
       <div className="text-center">
-        <h1 className="text-3xl font-bold gradient-text mb-2">Export Center</h1>
+        <h1 className="text-3xl font-bold gradient-text mb-2">📤 MoneyMoves</h1>
         <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-          Export your financial data and generate monthly reports
-        </p>
-        <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-          with advanced filtering options.
+          Download your money records to share with parents or for school projects!
         </p>
       </div>
 
       <div className="card max-w-4xl mx-auto">
-        <h2 className="text-xl font-bold mb-6">Filter Options</h2>
+        <h2 className="text-xl font-bold mb-6">Choose What to Download</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="form-group">

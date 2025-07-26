@@ -2,6 +2,7 @@ import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { Expense } from '@/types/expense';
 import { Income } from '@/types/income';
+import { BudgetFormData } from '@/types/budget';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -178,4 +179,64 @@ export function getIncomeCategoryIcon(category: string): string {
     Other: '💰',
   };
   return icons[category as keyof typeof icons] || icons.Other;
+}
+
+export function validateBudgetForm(data: BudgetFormData): { isValid: boolean; errors: Record<string, string> } {
+  const errors: Record<string, string> = {};
+
+  if (!data.name.trim()) {
+    errors.name = 'Budget name is required';
+  } else if (data.name.trim().length < 3) {
+    errors.name = 'Budget name must be at least 3 characters';
+  }
+
+  if (!data.category) {
+    errors.category = 'Category is required';
+  }
+
+  if (!data.amount) {
+    errors.amount = 'Amount is required';
+  } else if (isNaN(parseFloat(data.amount)) || parseFloat(data.amount) <= 0) {
+    errors.amount = 'Amount must be a positive number';
+  }
+
+  if (!data.period) {
+    errors.period = 'Period is required';
+  }
+
+  if (!data.startDate) {
+    errors.startDate = 'Start date is required';
+  }
+
+  if (data.endDate && data.startDate && new Date(data.endDate) <= new Date(data.startDate)) {
+    errors.endDate = 'End date must be after start date';
+  }
+
+  if (!data.alertThreshold) {
+    errors.alertThreshold = 'Alert threshold is required';
+  } else {
+    const threshold = parseFloat(data.alertThreshold);
+    if (isNaN(threshold) || threshold < 1 || threshold > 100) {
+      errors.alertThreshold = 'Alert threshold must be between 1 and 100';
+    }
+  }
+
+  return {
+    isValid: Object.keys(errors).length === 0,
+    errors,
+  };
+}
+
+export function getBudgetCategoryColor(category: string): string {
+  const colors = {
+    Total: 'bg-indigo-100 text-indigo-800',
+    Food: 'bg-orange-100 text-orange-800',
+    Transportation: 'bg-blue-100 text-blue-800',
+    Entertainment: 'bg-purple-100 text-purple-800',
+    Shopping: 'bg-pink-100 text-pink-800',
+    Bills: 'bg-red-100 text-red-800',
+    Tech: 'bg-green-100 text-green-800',
+    Other: 'bg-gray-100 text-gray-800',
+  };
+  return colors[category as keyof typeof colors] || colors.Other;
 }

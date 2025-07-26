@@ -21,11 +21,13 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ initialData, onSubmit }) => {
     category: initialData?.category || 'Food',
     description: initialData?.description || '',
   });
+  const [maxDate, setMaxDate] = useState('');
 
   // Set current date after hydration to avoid SSR mismatch
   useEffect(() => {
+    const today = new Date().toISOString().split('T')[0];
+    setMaxDate(today);
     if (!initialData && !formData.date) {
-      const today = new Date().toISOString().split('T')[0];
       setFormData(prev => ({ ...prev, date: today }));
     }
   }, [initialData, formData.date]);
@@ -110,7 +112,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ initialData, onSubmit }) => {
           value={formData.date}
           onChange={handleChange}
           className="form-input"
-          max={new Date().toISOString().split('T')[0]}
+          max={maxDate}
         />
         {errors.date && <p className="form-error">{errors.date}</p>}
       </div>

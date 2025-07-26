@@ -6,7 +6,8 @@ import { useIncomes } from '@/components/IncomeProvider';
 import { storageService } from '@/lib/storage';
 import SpendingChart from '@/components/SpendingChart';
 import MonthlyChart from '@/components/MonthlyChart';
-import { formatCurrency } from '@/lib/utils';
+import DonutChart from '@/components/DonutChart';
+import { formatCurrency, getCategoryColor, getIncomeCategoryColor } from '@/lib/utils';
 
 export default function AnalyticsPage() {
   const { expenses } = useExpenses();
@@ -16,13 +17,70 @@ export default function AnalyticsPage() {
   const financialSummary = storageService.generateFinancialSummary(expenses, incomes);
   const monthlySpending = storageService.getMonthlySpending(expenses);
 
+  // Prepare data for donut charts
+  const incomeVsExpenseData = [
+    {
+      label: 'Income',
+      value: financialSummary.totalIncome,
+      color: '#48BB78'
+    },
+    {
+      label: 'Expenses', 
+      value: financialSummary.totalExpenses,
+      color: '#F56565'
+    }
+  ];
+
+  const categoryColors: Record<string, string> = {
+    Food: '#ED8936',
+    Transportation: '#4299E1', 
+    Entertainment: '#9F7AEA',
+    Shopping: '#ED64A6',
+    Bills: '#F56565',
+    Tech: '#48BB78',
+    Other: '#A0AEC0',
+    Salary: '#48BB78',
+    Freelance: '#4299E1',
+    Investment: '#9F7AEA', 
+    Gift: '#ED64A6'
+  };
+
+  const expenseCategoryData = expenseSummary.categorySummary.map(cat => ({
+    label: cat.category,
+    value: cat.amount,
+    color: categoryColors[cat.category] || '#A0AEC0'
+  }));
+
+  const incomeCategoryData = incomeSummary.topCategories.map(cat => ({
+    label: cat.category,
+    value: cat.amount,
+    color: categoryColors[cat.category] || '#A0AEC0'
+  }));
+
   return (
     <div className="space-y-8" style={{ paddingTop: '12pt' }}>
       <div className="text-center">
-        <h1 className="text-3xl font-bold gradient-text mb-2">Analytics</h1>
+        <h1 className="text-3xl font-bold gradient-text mb-2">📈 MoneyTracks</h1>
         <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-          Detailed insights into your financial patterns and spending trends.
+          Cool charts and graphs showing how you spend and earn money!
         </p>
+      </div>
+
+      {/* Donut Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <DonutChart
+          data={incomeVsExpenseData}
+          title="💰 Income vs Expenses"
+          centerText={formatCurrency(Math.abs(financialSummary.netIncome))}
+        />
+        
+        {expenseCategoryData.length > 0 && (
+          <DonutChart
+            data={expenseCategoryData}
+            title="💸 Spending by Category"
+            centerText={formatCurrency(financialSummary.totalExpenses)}
+          />
+        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

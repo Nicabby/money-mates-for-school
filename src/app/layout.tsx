@@ -3,11 +3,17 @@ import "./globals.css";
 import Navigation from "@/components/Navigation";
 import { ExpenseProvider } from "@/components/ExpenseProvider";
 import { IncomeProvider } from "@/components/IncomeProvider";
+import { BudgetProvider } from "@/components/BudgetProvider";
 import ErrorBoundary from "@/components/ErrorBoundary";
 
 export const metadata: Metadata = {
-  title: "Financial Tracker",
-  description: "Track your income and expenses with ease",
+  title: "MoneyMates - Learn Budgeting for Kids & Teens",
+  description: "A fun and easy way for kids and teens to learn money management, track allowance, and build smart spending habits",
+  icons: {
+    icon: "/moneymatespig.png",
+    shortcut: "/moneymatespig.png",
+    apple: "/moneymatespig.png",
+  },
 };
 
 export default function RootLayout({
@@ -17,14 +23,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="font-sans antialiased">
+      <body className="font-sans antialiased" suppressHydrationWarning={true}>
         <ErrorBoundary>
           <ExpenseProvider>
             <IncomeProvider>
-              <Navigation />
-              <main className="container py-8">
-                {children}
-              </main>
+              <BudgetProvider>
+                <Navigation />
+                <main className="container py-8">
+                  {children}
+                </main>
+              </BudgetProvider>
             </IncomeProvider>
           </ExpenseProvider>
         </ErrorBoundary>
