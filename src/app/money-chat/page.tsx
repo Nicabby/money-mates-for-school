@@ -16,7 +16,7 @@ export default function MoneyChatPage() {
     },
     {
       title: "Use the App Together",
-      content: "MoneyMates works best when families use it together. Review your child's entries weekly, celebrate when they stay within budget, and discuss spending patterns you notice in the analytics.",
+      content: "MoneyMates works best when families use it together. Review your child&apos;s entries weekly, celebrate when they stay within budget, and discuss spending patterns you notice in the analytics.",
       icon: "📱"
     },
     {
@@ -39,7 +39,7 @@ export default function MoneyChatPage() {
   const faqs = [
     {
       question: "How often should we review the app together?",
-      answer: "Weekly check-ins work best for most families. Pick a consistent day like Sunday evening to review the week's entries, discuss spending patterns, and plan for the upcoming week."
+      answer: "Weekly check-ins work best for most families. Pick a consistent day like Sunday evening to review the week&apos;s entries, discuss spending patterns, and plan for the upcoming week."
     },
     {
       question: "What if my child forgets to track expenses?",
@@ -47,11 +47,11 @@ export default function MoneyChatPage() {
     },
     {
       question: "How much allowance should I give?",
-      answer: "A common guideline is $1-2 per week per year of age (so $10-20/week for a 10-year-old), but adjust based on your family's budget and what expenses your child is responsible for covering."
+      answer: "A common guideline is $1-2 per week per year of age (so $10-20/week for a 10-year-old), but adjust based on your family&apos;s budget and what expenses your child is responsible for covering."
     },
     {
       question: "Should I let them make mistakes with money?",
-      answer: "Yes! Mistakes are valuable learning opportunities when the stakes are low. If they overspend and can't afford something they want, resist the urge to bail them out. Use it as a teaching moment instead."
+      answer: "Yes! Mistakes are valuable learning opportunities when the stakes are low. If they overspend and can&apos;t afford something they want, resist the urge to bail them out. Use it as a teaching moment instead."
     }
   ];
 
@@ -60,7 +60,7 @@ export default function MoneyChatPage() {
       <div className="text-center">
         <h1 className="text-3xl font-bold gradient-text mb-2">💬 MoneyChat</h1>
         <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-          Tips and guidance for parents to support their child's financial learning journey
+          Tips and guidance for parents to support their child&apos;s financial learning journey
         </p>
       </div>
 
@@ -106,7 +106,7 @@ export default function MoneyChatPage() {
           <div className="text-left space-y-3 max-w-2xl mx-auto">
             <div className="flex items-center space-x-3">
               <input type="checkbox" className="w-4 h-4 text-blue-600" />
-              <span className="text-blue-800">Set up your child's first budget together</span>
+              <span className="text-blue-800">Set up your child&apos;s first budget together</span>
             </div>
             <div className="flex items-center space-x-3">
               <input type="checkbox" className="w-4 h-4 text-blue-600" />
@@ -122,7 +122,7 @@ export default function MoneyChatPage() {
             </div>
             <div className="flex items-center space-x-3">
               <input type="checkbox" className="w-4 h-4 text-blue-600" />
-              <span className="text-blue-800">Set a savings goal they're excited about</span>
+              <span className="text-blue-800">Set a savings goal they&apos;re excited about</span>
             </div>
           </div>
         </div>

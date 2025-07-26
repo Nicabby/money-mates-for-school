@@ -445,7 +445,7 @@ export const storageService = {
 
     const today = new Date();
     let currentStreak = 0;
-    let checkDate = new Date(today);
+    const checkDate = new Date(today);
 
     // Go back day by day and check if budgets were maintained
     for (let i = 0; i < 365; i++) { // Check up to a year back

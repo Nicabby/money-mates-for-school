@@ -7,12 +7,13 @@ import BudgetForm from '@/components/BudgetForm';
 import BudgetStreakBadge from '@/components/BudgetStreakBadge';
 import { formatCurrency, getBudgetCategoryColor } from '@/lib/utils';
 import { storageService } from '@/lib/storage';
+import { Budget } from '@/types/budget';
 
 export default function BudgetsPage() {
   const { budgets, budgetSummary, deleteBudget } = useBudgets();
   const { expenses } = useExpenses();
   const [showForm, setShowForm] = useState(false);
-  const [editingBudget, setEditingBudget] = useState(null);
+  const [editingBudget, setEditingBudget] = useState<Budget | undefined>(undefined);
   const [streakSettings, setStreakSettings] = useState({ isVisible: true });
   const [streakDays, setStreakDays] = useState(0);
 
@@ -34,7 +35,7 @@ export default function BudgetsPage() {
     storageService.saveStreakSettings(newSettings);
   };
 
-  const handleEdit = (budget: any) => {
+  const handleEdit = (budget: Budget) => {
     setEditingBudget(budget);
     setShowForm(true);
   };
@@ -47,12 +48,12 @@ export default function BudgetsPage() {
 
   const handleFormSuccess = () => {
     setShowForm(false);
-    setEditingBudget(null);
+    setEditingBudget(undefined);
   };
 
   const handleCancel = () => {
     setShowForm(false);
-    setEditingBudget(null);
+    setEditingBudget(undefined);
   };
 
   if (showForm) {
@@ -152,7 +153,7 @@ export default function BudgetsPage() {
       {/* Budget Progress List */}
       {budgetSummary.budgetProgress.length > 0 ? (
         <div className="card">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">How I'm Doing</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">How I&apos;m Doing</h2>
           <div className="space-y-4">
             {budgetSummary.budgetProgress.map((progress) => (
               <div key={progress.budget.id} className="border border-gray-200 rounded-lg p-4">

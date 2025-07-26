@@ -64,7 +64,7 @@ const Dashboard: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="card income-card">
           <div>
-            <p className="text-sm font-medium opacity-90">Money I've Earned</p>
+            <p className="text-sm font-medium opacity-90">Money I&apos;ve Earned</p>
             <p className="text-3xl font-bold">
               {formatCurrency(financialSummary.totalIncome)}
             </p>
@@ -73,7 +73,7 @@ const Dashboard: React.FC = () => {
 
         <div className="card expense-card">
           <div>
-            <p className="text-sm font-medium opacity-90">Money I've Spent</p>
+            <p className="text-sm font-medium opacity-90">Money I&apos;ve Spent</p>
             <p className="text-3xl font-bold">
               {formatCurrency(financialSummary.totalExpenses)}
             </p>
@@ -236,7 +236,7 @@ const Dashboard: React.FC = () => {
             </div>
           ) : (
             <div className="text-center py-8">
-              <p className="text-gray-600 mb-4">You haven't spent any money yet! 🎉</p>
+              <p className="text-gray-600 mb-4">You haven&apos;t spent any money yet! 🎉</p>
               <Link href="/" className="btn btn-primary">
                 Record Your First Purchase
               </Link>
@@ -288,7 +288,7 @@ const Dashboard: React.FC = () => {
           <div className="text-center p-6 bg-green-50 border border-green-200 rounded-lg">
             <div className="text-3xl mb-3">💰</div>
             <h3 className="font-semibold text-green-800 mb-2">Save Jar</h3>
-            <p className="text-sm text-green-600">Money you're saving for future goals</p>
+            <p className="text-sm text-green-600">Money you&apos;re saving for future goals</p>
             <div className="mt-3 text-2xl font-bold text-green-700">$0.00</div>
           </div>
           <div className="text-center p-6 bg-orange-50 border border-orange-200 rounded-lg">

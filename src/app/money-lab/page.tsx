@@ -203,10 +203,10 @@ export default function MoneyLabPage() {
       <div className="bg-purple-50 border border-purple-200 rounded-lg p-6 text-center">
         <h2 className="text-xl font-semibold text-purple-900 mb-3">🚀 More Lessons Coming Soon!</h2>
         <p className="text-purple-700 mb-4">
-          We're working on interactive quizzes, real-world scenarios, and advanced topics like investing and entrepreneurship.
+          We&apos;re working on interactive quizzes, real-world scenarios, and advanced topics like investing and entrepreneurship.
         </p>
         <div className="text-sm text-purple-600">
-          💡 Have ideas for lessons you'd like to see? Let us know through MoneyChat!
+          💡 Have ideas for lessons you&apos;d like to see? Let us know through MoneyChat!
         </div>
       </div>
     </div>

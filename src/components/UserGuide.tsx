@@ -115,7 +115,7 @@ const UserGuide: React.FC<UserGuideProps> = ({ isOpen, onClose }) => {
               <h4 className="font-semibold text-green-800">Pro Tips for Success!</h4>
             </div>
             <ul className="text-green-700 text-sm space-y-1 ml-6">
-              <li>• Record transactions right after they happen so you don't forget</li>
+              <li>• Record transactions right after they happen so you don&apos;t forget</li>
               <li>• Start with small, realistic budgets and adjust as you learn</li>
               <li>• Check your dashboard weekly to stay on track</li>
               <li>• Ask parents or teachers if you need help understanding any terms</li>
@@ -128,7 +128,7 @@ const UserGuide: React.FC<UserGuideProps> = ({ isOpen, onClose }) => {
               onClick={onClose}
               className="btn btn-primary"
             >
-              🚀 Got It! Let's Start Tracking
+              🚀 Got It! Let&apos;s Start Tracking
             </button>
           </div>
         </div>

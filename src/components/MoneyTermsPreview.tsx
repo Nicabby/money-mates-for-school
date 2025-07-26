@@ -21,7 +21,7 @@ const MoneyTermsPreview: React.FC = () => {
         New to budgeting?
       </p>
       <p className="text-sm mb-3 text-left box-text-left" style={{ color: '#5e0b15', lineHeight: '1.5' }}>
-        Learn key money terms like "budget", "income", "expenses", and "savings" with simple definitions.
+        Learn key money terms like &quot;budget&quot;, &quot;income&quot;, &quot;expenses&quot;, and &quot;savings&quot; with simple definitions.
       </p>
       
       <p className="text-xs mb-3 text-left box-text-left" style={{ color: '#5e0b15' }}>
