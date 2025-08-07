@@ -46,8 +46,11 @@ const Navigation = () => {
               ))}
             </div>
             
-            {/* MoneyChat and MoneyLab links */}
+            {/* Educational links */}
             <div className="flex items-center space-x-4 border-l border-gray-300 pl-4">
+              <Link href="/financial-topics" className="text-sm text-green-600 hover:text-green-700 transition-colors font-medium">
+                📚 Financial Topics
+              </Link>
               <Link href="/money-chat" className="text-sm text-blue-600 hover:text-blue-700 transition-colors">
                 MoneyChat
               </Link>

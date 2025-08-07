@@ -1,6 +1,6 @@
-# Business Expenses
+# MoneyMates for School
 
-A modern, intuitive business expense tracking web application built with Next.js 14, TypeScript, and Tailwind CSS. Track your business expenses with ease and get insights into your spending patterns.
+A curriculum-aligned financial literacy application for Ontario Grade 4 students, built with Next.js 14, TypeScript, and Tailwind CSS. Features interactive lessons covering Ontario curriculum expectations F1.1, F1.2, and F1.3, with family expense tracking and educational components.
 
 ## Features
 

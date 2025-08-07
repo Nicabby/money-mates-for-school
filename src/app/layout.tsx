@@ -4,6 +4,8 @@ import Navigation from "@/components/Navigation";
 import { ExpenseProvider } from "@/components/ExpenseProvider";
 import { IncomeProvider } from "@/components/IncomeProvider";
 import { BudgetProvider } from "@/components/BudgetProvider";
+import { AuthProvider } from "@/contexts/AuthContext";
+import AuthWrapper from "@/components/AuthWrapper";
 import ErrorBoundary from "@/components/ErrorBoundary";
 
 export const metadata: Metadata = {
@@ -25,16 +27,20 @@ export default function RootLayout({
     <html lang="en">
       <body className="font-sans antialiased" suppressHydrationWarning={true}>
         <ErrorBoundary>
-          <ExpenseProvider>
-            <IncomeProvider>
-              <BudgetProvider>
-                <Navigation />
-                <main className="container py-8">
-                  {children}
-                </main>
-              </BudgetProvider>
-            </IncomeProvider>
-          </ExpenseProvider>
+          <AuthProvider>
+            <AuthWrapper>
+              <ExpenseProvider>
+                <IncomeProvider>
+                  <BudgetProvider>
+                    <Navigation />
+                    <main className="container py-8">
+                      {children}
+                    </main>
+                  </BudgetProvider>
+                </IncomeProvider>
+              </ExpenseProvider>
+            </AuthWrapper>
+          </AuthProvider>
         </ErrorBoundary>
       </body>
     </html>

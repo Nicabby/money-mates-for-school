@@ -8,6 +8,7 @@ import { useBudgets } from '@/components/BudgetProvider';
 import { storageService } from '@/lib/storage';
 import { formatCurrency, formatDate, getCategoryColor, getIncomeCategoryColor, getBudgetCategoryColor } from '@/lib/utils';
 import CloudExportHub from '@/components/CloudExportHub';
+import LessonProgress from '@/components/LessonProgress';
 
 const Dashboard: React.FC = () => {
   const { expenses } = useExpenses();
@@ -151,6 +152,9 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Learning Progress */}
+      <LessonProgress />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="card">

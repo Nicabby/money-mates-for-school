@@ -1,0 +1,90 @@
+// Firestore Security Rules for MoneyMates
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Users collection rules
+    match /users/{userId} {
+      // Users can read and write their own document
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      
+      // Parents can read their kids' documents
+      allow read: if request.auth != null && 
+                     request.auth.uid != null &&
+                     resource.data.parentId == request.auth.uid;
+      
+      // Parents can update their kids' documents (for allowances, etc.)
+      allow update: if request.auth != null &&
+                       request.auth.uid != null &&
+                       resource.data.parentId == request.auth.uid &&
+                       // Ensure kids can't change their parentId
+                       request.resource.data.parentId == resource.data.parentId &&
+                       // Ensure role doesn't change
+                       request.resource.data.role == resource.data.role;
+    }
+    
+    // Connection codes collection
+    match /connectionCodes/{codeId} {
+      // Parents can create connection codes
+      allow create: if request.auth != null && 
+                       request.resource.data.parentUid == request.auth.uid;
+      // Anyone can read to verify codes (but code is the document ID so they need to know it)
+      allow read: if request.auth != null;
+      // Only the system can update codes (mark as used)
+      allow update: if request.auth != null;
+    }
+    
+    // Connection requests collection
+    match /connectionRequests/{requestId} {
+      // Kids can create connection requests
+      allow create: if request.auth != null && 
+                       request.resource.data.kidUid == request.auth.uid;
+      // Parents can read requests for their email
+      allow read: if request.auth != null && 
+                     (request.auth.uid == resource.data.parentUid || 
+                      request.auth.uid == resource.data.kidUid);
+      // Parents can update requests to accept/deny
+      allow update: if request.auth != null && 
+                       request.auth.uid == resource.data.parentUid;
+    }
+    
+    // Child profiles collection
+    match /childProfiles/{childId} {
+      // Parents can create, read, and update their children's profiles
+      allow create, read, update: if request.auth != null && 
+                                     request.auth.uid == resource.data.parentUid;
+      // Allow create if the parentUid matches the authenticated user
+      allow create: if request.auth != null && 
+                       request.auth.uid == request.resource.data.parentUid;
+    }
+    
+    // Shared data collections (if needed in the future)
+    match /shared/{document=**} {
+      // Only authenticated users can read shared data
+      allow read: if request.auth != null;
+      // Only parents can write shared data
+      allow write: if request.auth != null && 
+                      get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'parent';
+    }
+    
+    // Helper functions
+    function isOwner(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+    
+    function isParentOf(kidUserId) {
+      return request.auth != null && 
+             request.auth.uid != null &&
+             get(/databases/$(database)/documents/users/$(kidUserId)).data.parentId == request.auth.uid;
+    }
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isParent() {
+      return request.auth != null && 
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'parent';
+    }
+  }
+}

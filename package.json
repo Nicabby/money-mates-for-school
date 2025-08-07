@@ -1,5 +1,5 @@
 {
-  "name": "expense-tracker-ai",
+  "name": "money-mates-for-school",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "clsx": "^2.1.1",
+    "firebase": "^12.0.0",
     "next": "15.4.1",
     "react": "19.1.0",
     "react-dom": "19.1.0",
