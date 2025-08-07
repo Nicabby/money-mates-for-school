@@ -18,8 +18,29 @@ import {
   setupChildAllowance 
 } from '../lib/firestore';
 
-// Create Auth Context
-const AuthContext = createContext({});
+// Create Auth Context with proper typing
+interface AuthContextType {
+  currentUser: any;
+  userDocument: any;
+  loading: boolean;
+  error: string | null;
+  signUp: (email: string, password: string, userData: any) => Promise<any>;
+  signIn: (email: string, password: string) => Promise<any>;
+  signInAsKid: (kidName: string) => Promise<any>;
+  signOut: () => Promise<void>;
+  connectViaCode: (code: string) => Promise<string>;
+  connectViaEmail: (parentEmail: string) => Promise<boolean>;
+  setupAllowance: (kidUid: string, allowanceData: any) => Promise<void>;
+  refreshUserDocument: () => Promise<void>;
+  isAuthenticated: boolean;
+  isParent: boolean;
+  isKid: boolean;
+  getUserDisplayName: () => string;
+  getUserBalance: () => number;
+  clearError: () => void;
+}
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Custom hook to use auth context
 export const useAuth = () => {

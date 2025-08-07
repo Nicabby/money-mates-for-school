@@ -22,7 +22,7 @@ import { db } from './firebase';
  * @param {Object} additionalData - Additional user data
  * @returns {Promise<Object>} User document data
  */
-export const createUserDocument = async (user, additionalData = {}) => {
+export const createUserDocument = async (user: any, additionalData: any = {}) => {
   if (!user) return null;
 
   const userRef = doc(db, 'users', user.uid);
