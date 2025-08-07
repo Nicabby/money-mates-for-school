@@ -155,22 +155,28 @@ export const AuthProvider = ({ children }) => {
 
   // Listen for authentication state changes
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      setCurrentUser(user);
-      if (user) {
-        // Add a small delay to ensure Firestore document is created
-        // For anonymous users, wait longer as document creation might take more time
-        const delay = user.isAnonymous ? 500 : 100;
-        setTimeout(async () => {
-          await loadUserDocument(user);
+    try {
+      const unsubscribe = onAuthStateChanged(auth, async (user) => {
+        setCurrentUser(user);
+        if (user) {
+          // Add a small delay to ensure Firestore document is created
+          // For anonymous users, wait longer as document creation might take more time
+          const delay = user.isAnonymous ? 500 : 100;
+          setTimeout(async () => {
+            await loadUserDocument(user);
+            setLoading(false);
+          }, delay);
+        } else {
           setLoading(false);
-        }, delay);
-      } else {
-        setLoading(false);
-      }
-    });
+        }
+      });
 
-    return unsubscribe;
+      return unsubscribe;
+    } catch (error) {
+      console.warn('Firebase auth not available during build:', error);
+      setLoading(false);
+      return () => {}; // Return empty cleanup function
+    }
   }, []);
 
   // Check if user is authenticated
