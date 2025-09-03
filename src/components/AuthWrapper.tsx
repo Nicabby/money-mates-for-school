@@ -12,6 +12,9 @@ interface AuthWrapperProps {
 const AuthWrapper: React.FC<AuthWrapperProps> = ({ children }) => {
   const { currentUser, loading, isAuthenticated } = useAuth();
 
+  // TEMPORARY: Skip authentication for development - always show main app
+  return <>{children}</>;
+
   // Show loading spinner while checking authentication
   if (loading) {
     return (

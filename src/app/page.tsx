@@ -155,60 +155,32 @@ export default function Home() {
             <img src="/MoneyMateslogo.png" alt="MoneyMates" style={{ height: '201.6px', width: 'auto' }} />
           </div>
           <div className="text-center">
-            {isAuthenticated ? (
-              <>
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                  Welcome back, {getUserDisplayName()}! 👋
-                </h2>
-                <p className="text-gray-600 text-lg mb-4">
-                  Ready to manage your money like a pro? Let&apos;s track your earnings and spending!
-                </p>
-                <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-                  <button
-                    onClick={() => router.push('/dashboard')}
-                    className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-                  >
-                    📊 View Dashboard
-                  </button>
-                  <button
-                    onClick={() => signOut()}
-                    className="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition-colors"
-                  >
-                    🚪 Sign Out
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <p className="text-gray-600 text-lg mb-2">
-                  Learn how to manage your money like a pro! 
-                </p>
-                <p className="text-gray-600 text-lg mb-2">
-                  Track what you earn (allowance, chores) and what you spend.
-                </p>
-                <p className="text-gray-600 text-lg mb-4">
-                  Build smart money habits that will help you reach your goals!
-                </p>
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-lg mx-auto">
-                  <p className="text-blue-800 text-sm">
-                    <strong>New to budgeting?</strong> Check out our <a href="/money-terms" className="text-blue-600 underline">Money Terms Guide</a> to learn the basics!
-                  </p>
-                </div>
-              </>
-            )}
+            {/* TEMPORARY: Always show welcome message for development */}
+            <>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                Welcome to MoneyMates! 👋
+              </h2>
+              <p className="text-gray-600 text-lg mb-4">
+                Ready to manage your money like a pro? Let&apos;s track your earnings and spending!
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+                <button
+                  onClick={() => router.push('/dashboard')}
+                  className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  📊 View Dashboard
+                </button>
+              </div>
+            </>
           </div>
         </div>
       </div>
 
       {/* Different content based on user role */}
-      {isAuthenticated && isParent && (
-        <div className="mx-auto" style={{ maxWidth: 'calc(64rem + 6cm)' }}>
-          <ParentDashboard />
-        </div>
-      )}
-
-      {/* Four boxes in 2x2 grid - Only show for kids or when not role-specific */}
-      {isAuthenticated && (isKid || (!isParent && !isKid)) && (
+      {/* TEMPORARY: Always show content for development */}
+      
+      {/* Four boxes in 2x2 grid - Always show for development */}
+      {true && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mx-auto" style={{ maxWidth: 'calc(64rem + 6cm)' }}>
           <div className="bg-white border border-gray-200 rounded-lg p-4">
             <div className="text-center" style={{ marginBottom: '6px' }}>
