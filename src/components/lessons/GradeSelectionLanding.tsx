@@ -39,15 +39,17 @@ const GradeSelectionLanding: React.FC = () => {
             <button
               key={grade}
               onClick={() => handleGradeSelect(grade)}
-              className="group relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 p-4 border-2 border-transparent hover:border-blue-200 min-h-[120px]"
+              className="group relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 p-6 border-2 border-transparent hover:border-blue-200"
+              style={{ minHeight: '140px' }}
             >
-              {/* Grade Number Circle */}
-              <div className="flex flex-col items-center justify-center text-center w-full h-full">
-                <div className="w-20 h-20 rounded-full bg-blue-600 flex items-center justify-center group-hover:bg-blue-700 transition-all duration-300 flex-shrink-0">
-                  <div className="text-center">
-                    <div className="text-xs font-bold text-white leading-none">Grade</div>
-                    <div className="text-lg font-bold text-white leading-none">{grade}</div>
-                  </div>
+              <div className="flex items-center justify-center h-full">
+                <div 
+                  className="rounded-full bg-blue-600 flex items-center justify-center group-hover:bg-blue-700 transition-colors duration-300"
+                  style={{ width: '80px', height: '80px' }}
+                >
+                  <span className="text-white font-bold text-center" style={{ fontSize: '12px', lineHeight: '1.2' }}>
+                    Grade<br />{grade}
+                  </span>
                 </div>
               </div>
             </button>
