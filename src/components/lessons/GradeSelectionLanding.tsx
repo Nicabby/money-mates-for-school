@@ -13,7 +13,7 @@ const GradeSelectionLanding: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 py-12">
+    <div className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-4xl mx-auto px-4">
         <LessonBreadcrumb />
         {/* Header Section */}
@@ -39,21 +39,14 @@ const GradeSelectionLanding: React.FC = () => {
             <button
               key={grade}
               onClick={() => handleGradeSelect(grade)}
-              className="group relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 p-6 border-2 border-transparent hover:border-blue-200"
+              className="group relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 p-4 border-2 border-transparent hover:border-blue-200"
             >
               {/* Grade Number Circle */}
               <div className="flex flex-col items-center text-center">
-                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center mb-4 group-hover:from-blue-600 group-hover:to-blue-700 transition-all duration-300">
+                <div className="w-20 h-20 rounded-full bg-blue-600 flex items-center justify-center group-hover:bg-blue-700 transition-all duration-300">
                   <span className="text-sm font-bold text-white text-center leading-tight">
                     Grade<br/>{grade}
                   </span>
-                </div>
-                
-                {/* Hover indicator */}
-                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="text-blue-600 text-sm font-medium text-center">
-                    Explore Lessons →
-                  </div>
                 </div>
               </div>
             </button>
@@ -62,7 +55,7 @@ const GradeSelectionLanding: React.FC = () => {
 
         {/* Information Section */}
         <div className="mt-16 text-center">
-          <div className="bg-gray-50 rounded-xl shadow-md p-8 max-w-3xl mx-auto">
+          <div className="bg-white rounded-xl shadow-md p-8 max-w-3xl mx-auto">
             <h2 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
               Ontario Curriculum Aligned
             </h2>
