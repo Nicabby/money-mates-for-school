@@ -681,3 +681,12 @@ p:not(.text-center p):not(.card p),
 .page-header h1 {
   margin-bottom: 1rem !important;
 }
+
+/* Fix for grade selection buttons - override button overflow */
+.grade-selection-button {
+  overflow: visible !important;
+}
+
+.grade-selection-button .grade-circle {
+  overflow: visible !important;
+}

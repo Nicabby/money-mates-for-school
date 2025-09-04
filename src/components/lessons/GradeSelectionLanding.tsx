@@ -39,7 +39,7 @@ const GradeSelectionLanding: React.FC = () => {
             <button
               key={grade}
               onClick={() => handleGradeSelect(grade)}
-              className="group relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border-2 border-transparent hover:border-blue-200"
+              className="grade-selection-button group relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border-2 border-transparent hover:border-blue-200"
               style={{ 
                 minHeight: '160px',
                 padding: '24px',
@@ -47,14 +47,15 @@ const GradeSelectionLanding: React.FC = () => {
               }}
             >
               <div 
-                className="absolute top-1/2 left-1/2 rounded-full bg-blue-600 group-hover:bg-blue-700 transition-colors duration-300"
+                className="grade-circle absolute top-1/2 left-1/2 rounded-full bg-blue-600 group-hover:bg-blue-700 transition-colors duration-300"
                 style={{ 
                   width: '80px', 
                   height: '80px',
                   transform: 'translate(-50%, -50%)',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  overflow: 'visible'
                 }}
               >
                 <div className="text-white font-bold text-center" style={{ fontSize: '12px', lineHeight: '1.2' }}>
