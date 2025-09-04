@@ -22,45 +22,38 @@ const GradeSelectionLanding: React.FC = () => {
       <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
         <LessonBreadcrumb />
         
-        {/* Logo */}
-        <div style={{ marginBottom: '40px' }}>
+        {/* Header Container with Logo and Text */}
+        <div style={{
+          backgroundColor: 'white',
+          borderRadius: '20px',
+          padding: '40px',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+          marginBottom: '60px',
+          textAlign: 'center'
+        }}>
           <img 
             src="/MoneyMateslogo.png" 
             alt="MoneyMates" 
-            style={{ height: '120px', margin: '0 auto', display: 'block' }}
+            style={{ height: '120px', margin: '0 auto 30px auto', display: 'block' }}
           />
+          <p style={{ 
+            fontSize: '28px', 
+            color: '#2d3748', 
+            margin: '0',
+            textAlign: 'center',
+            fontWeight: '500'
+          }}>
+            Select your grade level to explore Ontario curriculum expectations designed just for you!
+          </p>
         </div>
-
-        {/* Title */}
-        <h1 style={{ 
-          fontSize: '48px', 
-          fontWeight: 'bold', 
-          color: '#2d3748', 
-          marginBottom: '20px',
-          textAlign: 'center'
-        }}>
-          Select Your Grade
-        </h1>
-
-        {/* Description */}
-        <p style={{ 
-          fontSize: '20px', 
-          color: '#718096', 
-          marginBottom: '60px',
-          textAlign: 'center',
-          maxWidth: '600px',
-          margin: '0 auto 60px auto'
-        }}>
-          Select your grade level to explore Ontario curriculum expectations designed just for you!
-        </p>
 
         {/* Grade Buttons */}
         <div style={{ 
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-          gap: '30px',
-          maxWidth: '900px',
-          margin: '0 auto 60px auto'
+          display: 'flex',
+          justifyContent: 'center',
+          gap: '20px',
+          marginBottom: '60px',
+          flexWrap: 'wrap'
         }}>
           {AVAILABLE_GRADES.map((grade) => (
             <div
@@ -68,13 +61,19 @@ const GradeSelectionLanding: React.FC = () => {
               onClick={() => handleGradeSelect(grade)}
               style={{
                 backgroundColor: 'white',
-                borderRadius: '20px',
+                borderRadius: '15px',
                 boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-                padding: '40px 20px',
+                padding: '20px',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
                 textAlign: 'center',
-                border: 'none'
+                border: 'none',
+                width: '140px',
+                height: '140px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-5px)';
@@ -92,9 +91,7 @@ const GradeSelectionLanding: React.FC = () => {
                 borderRadius: '50%',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center',
-                margin: '0 auto',
-                marginBottom: '20px'
+                justifyContent: 'center'
               }}>
                 <span style={{
                   color: 'white',
