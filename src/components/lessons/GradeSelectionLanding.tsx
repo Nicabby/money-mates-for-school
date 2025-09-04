@@ -13,7 +13,7 @@ const GradeSelectionLanding: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white py-12">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 py-12">
       <div className="max-w-4xl mx-auto px-4">
         <LessonBreadcrumb />
         {/* Header Section */}
@@ -44,8 +44,8 @@ const GradeSelectionLanding: React.FC = () => {
               {/* Grade Number Circle */}
               <div className="flex flex-col items-center text-center">
                 <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center mb-4 group-hover:from-blue-600 group-hover:to-blue-700 transition-all duration-300">
-                  <span className="text-lg font-bold text-white text-center">
-                    Grade {grade}
+                  <span className="text-sm font-bold text-white text-center leading-tight">
+                    Grade<br/>{grade}
                   </span>
                 </div>
                 
