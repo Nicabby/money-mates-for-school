@@ -25,7 +25,7 @@ const GRADE_4_ACTIVITIES = {
   'F1.2': {
     title: '"Shopping Cart Math"',
     objective: 'Estimate and calculate total cost and change using mental math.',
-    scenario: 'Students pick two or three items (e.g., $3 apple + $5 book), and enter how much they'd pay and how much change they'd get from $10.',
+    scenario: 'Students pick two or three items (e.g., $3 apple + $5 book), and enter how much they\'d pay and how much change they\'d get from $10.',
     steps: [
       'Students pick items; total is hidden',
       'Students guess total, then hit "Reveal"',
